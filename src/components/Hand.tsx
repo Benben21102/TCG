@@ -1,6 +1,7 @@
-import React from "react";
-import { Card } from "../types";
-import { Art } from "./Art";
+import React from 'react';
+import { Card } from '../types';
+import Grid from '@mui/material/Grid';
+import { TradingCard } from './TradingCard';
 
 type HandProps = {
   cards: Card[];
@@ -11,28 +12,27 @@ type HandProps = {
 
 export function Hand({ cards, onPlay, mana, imageMap }: HandProps) {
   return (
-    <div className="grid hand">
+    <Grid
+      container
+      spacing={2}
+      sx={{
+        mt: 2,
+        mb: 2,
+        display: 'grid',
+        gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: '1fr 1fr 1fr', lg: '1fr 1fr 1fr 1fr' },
+        justifyContent: 'center',
+      }}
+    >
       {cards.map((c) => (
-        <div
-          key={c.id}
-          className={`cardbox ${c.cost <= mana ? "playable" : ""}`}
-        >
-          <Art name={c.name} imageMap={imageMap} />
-          <div className="cardtitle">{c.name}</div>
-          <div className="details">
-            Cost {c.cost}
-            {c.type === "unit" ? ` • ${c.atk}/${c.hp}` : " • Spell"}
-          </div>
-          <div className="keyword">{c.keyword}</div>
-          <button
-            className="btn"
-            onClick={() => onPlay(c)}
-            disabled={c.cost > mana}
-          >
-            Play
-          </button>
+        <div key={c.id} style={{ display: 'flex', justifyContent: 'center' }}>
+          <TradingCard
+            card={c}
+            imageUrl={imageMap[c.name]}
+            onAdd={() => onPlay(c)}
+            disabledAdd={c.cost > mana}
+          />
         </div>
       ))}
-    </div>
+    </Grid>
   );
 }

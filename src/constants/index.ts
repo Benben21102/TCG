@@ -1,0 +1,88 @@
+// Card pool and campaign unlocks
+import { Card } from '../types';
+
+export const BASE_CARDS: Card[] = [
+  { name: 'Purple Rain', cost: 1, type: 'unit', atk: 3, hp: 1, keyword: 'Rush', level: 1 },
+  { name: 'Book Rust', cost: 1, type: 'unit', atk: 2, hp: 1, keyword: 'Rush', level: 1 },
+  { name: '10 of Lib', cost: 1, type: 'unit', atk: 1, hp: 1, keyword: 'Vanguard', level: 1 },
+  { name: 'Coconut Champ', cost: 1, type: 'unit', atk: 1, hp: 2, keyword: 'Lifesteal', level: 1 },
+  { name: 'Beach Goer', cost: 1, type: 'unit', atk: 1, hp: 1, keyword: 'Vanguard', level: 1 },
+  { name: 'Jack Knight', cost: 2, type: 'unit', atk: 2, hp: 3, keyword: '', level: 2 },
+  { name: 'Lifesteal Book', cost: 2, type: 'unit', atk: 2, hp: 2, keyword: 'Lifesteal', level: 2 },
+  { name: 'Blue Lagoon', cost: 2, type: 'unit', atk: 3, hp: 2, keyword: '', level: 2 },
+  { name: 'Beach Goer 2', cost: 2, type: 'unit', atk: 1, hp: 3, keyword: 'Lifesteal', level: 2 },
+  { name: 'Stackways', cost: 2, type: 'spell', effect: 'summon2', keyword: 'Spell', level: 2 },
+  { name: 'Beach Goer 3', cost: 2, type: 'unit', atk: 2, hp: 2, keyword: 'Vanguard', level: 2 },
+  { name: 'Mango Warrior', cost: 2, type: 'unit', atk: 2, hp: 2, keyword: 'Rush', level: 2 },
+  { name: 'Zap!', cost: 2, type: 'spell', effect: 'damage2', keyword: 'Spell', level: 2 },
+  { name: 'Insight', cost: 2, type: 'spell', effect: 'draw2', keyword: 'Spell', level: 2 },
+  { name: 'Queens Knight', cost: 3, type: 'unit', atk: 2, hp: 4, keyword: '', level: 3 },
+  { name: 'Tequila Sunrise', cost: 3, type: 'unit', atk: 3, hp: 3, keyword: 'Rush', level: 3 },
+  {
+    name: 'Banana Brawlers',
+    cost: 3,
+    type: 'unit',
+    atk: 2,
+    hp: 2,
+    keyword: '',
+    effect: 'banana',
+    level: 3,
+  },
+  { name: 'Electra', cost: 3, type: 'unit', atk: 3, hp: 3, keyword: '', level: 3 },
+  { name: 'Edgar', cost: 3, type: 'unit', atk: 3, hp: 3, keyword: '', level: 3 },
+  { name: 'Beach Brawlers', cost: 4, type: 'unit', atk: 5, hp: 3, keyword: '', level: 4 },
+  { name: 'Beatrice', cost: 4, type: 'unit', atk: 2, hp: 5, keyword: 'Lifesteal', level: 4 },
+  { name: 'Mad Hatter', cost: 4, type: 'unit', atk: 4, hp: 4, keyword: 'Rush', level: 4 },
+  { name: 'Guardbook', cost: 4, type: 'unit', atk: 4, hp: 4, keyword: 'Vanguard', level: 4 },
+  {
+    name: 'Grave Recall',
+    cost: 4,
+    type: 'spell',
+    effect: 'summonTop2Grave',
+    keyword: 'Spell',
+    level: 4,
+  },
+  { name: 'Dante', cost: 5, type: 'unit', atk: 6, hp: 6, keyword: 'Rush', level: 5 },
+  { name: 'Pineapple Man', cost: 5, type: 'unit', atk: 6, hp: 6, keyword: '', level: 5 },
+];
+
+export const EXTRA_POOL_TEMPLATE: Card[] = [
+  {
+    name: 'Extra Goer (Rush)',
+    atk: 1,
+    hp: 1,
+    keyword: 'Rush',
+    cost: 0,
+    type: 'unit' as const,
+    level: 1,
+  },
+  {
+    name: 'Extra Goer (Rush)',
+    atk: 1,
+    hp: 1,
+    keyword: 'Rush',
+    cost: 0,
+    type: 'unit' as const,
+    level: 1,
+  },
+  {
+    name: 'Extra Goer (Lifesteal)',
+    atk: 1,
+    hp: 1,
+    keyword: 'Lifesteal',
+    cost: 0,
+    type: 'unit' as const,
+    level: 1,
+  },
+  {
+    name: 'Extra Goer (Lifesteal)',
+    atk: 1,
+    hp: 1,
+    keyword: 'Lifesteal',
+    cost: 0,
+    type: 'unit' as const,
+    level: 1,
+  },
+];
+
+export const UNLOCKS_KEY = 'campaignUnlocks_v1';
