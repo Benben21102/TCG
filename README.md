@@ -31,15 +31,21 @@ Both should print a version number (e.g. `v18.19.0`).
 - On Windows: Right-click in the folder and choose **Open in Terminal** or **Open PowerShell window here**.
 - On Mac: Open Terminal, then `cd` to the folder.
 
-### 4. Install the Project Dependencies
+
+### 4. One-Step Project Setup (Recommended for New Contributors)
 
 In the terminal, run:
 
 ```
-npm install
+npm run setup
 ```
 
-This will download everything needed to run the app. (You only need to do this once, or if you get new files.)
+This will:
+- Install all dependencies
+- Set up pre-commit hooks for code style and linting
+- Print a success message when ready
+
+You only need to do this once when you first join the project (or after cloning).
 
 ### 5. Start the App
 
@@ -79,15 +85,20 @@ This will open the app in your web browser (usually at [http://localhost:3000](h
 
 ---
 
-## � Scripts You Can Use
 
+## 🟡 Scripts You Can Use
+
+- `npm run setup` — One-step setup for new contributors (installs dependencies, sets up git hooks)
 - `npm start` — Start the app in development mode (auto-reloads on changes)
 - `npm run build` — Make a production build (for deployment)
 - `npm test` — Run tests (if any)
+- `npm run lint` — Check code for style and errors (TypeScript, React, Prettier)
+- `npm run format` — Auto-format code, styles, markdown, and JSON
 
 ---
 
-## 📝 Notes for Developers
+
+## 📝 Notes for Developers & Teams
 
 - All logic is now in TypeScript. No legacy JS files remain.
 - Main entry: `src/index.tsx` and `src/App.tsx`
@@ -96,6 +107,13 @@ This will open the app in your web browser (usually at [http://localhost:3000](h
 - Game state and reducer: `src/state.ts`
 - Components: `src/components/`
 - Animations: [Framer Motion](https://www.framer.com/motion/)
+- **Code style and linting:**
+  - Prettier and ESLint are enforced on commit (via Husky/lint-staged)
+  - Run `npm run lint` and `npm run format` manually as needed
+  - Use consistent code style for all contributions
+- **Pre-commit hooks:**
+  - All code is checked and auto-formatted before every commit
+  - If a commit fails, fix the reported issues and try again
 
 ---
 
