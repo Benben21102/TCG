@@ -1,4 +1,10 @@
-export function startMulliganFromDecks(state: State, deck1: Card[], deck2: Card[], isCampaign: boolean): State {
+/* global localStorage */
+export function startMulliganFromDecks(
+  state: State,
+  deck1: Card[],
+  deck2: Card[],
+  isCampaign: boolean,
+): State {
   const p1 = buildPlayerFromDeck(deck1);
   const p2 = buildPlayerFromDeck(deck2);
   return {
@@ -10,8 +16,8 @@ export function startMulliganFromDecks(state: State, deck1: Card[], deck2: Card[
     attacked: {},
     attackCount: { 1: 0, 2: 0 },
     powerUsed: { 1: false, 2: false },
-    tab: "mulligan",
-    log: ["— Mulligan — Select cards to replace (each player) —"],
+    tab: 'mulligan',
+    log: ['— Mulligan — Select cards to replace (each player) —'],
     vsAI: isCampaign ? true : state.vsAI,
   };
 }
@@ -21,17 +27,17 @@ export function endGame(state: State, winner: number, isCampaign: boolean): Stat
     if (winner === 1)
       return {
         ...state,
-        tab: "campaignReward",
+        tab: 'campaignReward',
         campaign: {
           ...state.campaign,
           rewardsLeft: 3,
           rewardOptions: randomRewardOptions(),
         },
-        log: ["🏆 You win! Choose rewards."],
+        log: ['🏆 You win! Choose rewards.'],
       };
     return {
       ...initialState,
-      tab: "campaignHero",
+      tab: 'campaignHero',
       campaign: {
         active: true,
         stage: 0,
@@ -43,18 +49,18 @@ export function endGame(state: State, winner: number, isCampaign: boolean): Stat
   }
   return {
     ...initialState,
-    tab: "mainMenu",
+    tab: 'mainMenu',
     campaign: { ...initialState.campaign, unlocks: loadUnlocks() },
   };
 }
 
-import { Card, State, Action, Player } from "./types";
-import { BASE_CARDS, EXTRA_POOL_TEMPLATE, UNLOCKS_KEY } from "./constants";
-import { makeId, shuffle } from "./utils";
+import { Card, State, Action, Player } from './types';
+import { BASE_CARDS, EXTRA_POOL_TEMPLATE, UNLOCKS_KEY } from './constants';
+import { makeId, shuffle } from './utils';
 
 function loadUnlocks(): string[] {
   try {
-    return JSON.parse(localStorage.getItem(UNLOCKS_KEY) || "[]");
+    return JSON.parse(localStorage.getItem(UNLOCKS_KEY) || '[]');
   } catch {
     return [];
   }
@@ -64,7 +70,7 @@ function saveUnlocks(arr: string[]) {
 }
 
 export const initialState: State = {
-  tab: "mainMenu",
+  tab: 'mainMenu',
   hero: { 1: null, 2: null },
   power: { 1: null, 2: null },
   dbCurrent: 1,
@@ -91,7 +97,7 @@ export const initialState: State = {
     unlocks: loadUnlocks(),
   },
   mullSel: { 1: new Set(), 2: new Set() },
-  imageMap: JSON.parse(localStorage.getItem("cardImages") || "{}"),
+  imageMap: JSON.parse(localStorage.getItem('cardImages') || '{}'),
 };
 
 export function legalToAdd20(deck: Card[], card: Card): boolean {
@@ -145,10 +151,7 @@ export function buildLegalDeckFromPool(pool: Card[], size = 20): Card[] {
   if (picks.length < size) {
     const fillers = BASE_CARDS.filter((c) => c.level === 1);
     for (const f of fillers) {
-      while (
-        picks.length < size &&
-        picks.filter((x) => x.name === f.name).length < 2
-      ) {
+      while (picks.length < size && picks.filter((x) => x.name === f.name).length < 2) {
         picks.push({ ...f, id: makeId() });
       }
       if (picks.length >= size) break;
@@ -162,42 +165,42 @@ export function makeFixedAIDeck(stage: number): Card[] {
   if (stage === 1) {
     pool = BASE_CARDS.filter((c) =>
       [
-        "10 of Lib",
-        "Beach Goer",
-        "Beach Goer 3",
-        "Guardbook",
-        "Queens Knight",
-        "Jack Knight",
-        "Insight",
-        "Zap!",
-      ].includes(c.name)
+        '10 of Lib',
+        'Beach Goer',
+        'Beach Goer 3',
+        'Guardbook',
+        'Queens Knight',
+        'Jack Knight',
+        'Insight',
+        'Zap!',
+      ].includes(c.name),
     );
   } else if (stage === 2) {
     pool = BASE_CARDS.filter((c) =>
       [
-        "Purple Rain",
-        "Book Rust",
-        "Mango Warrior",
-        "Tequila Sunrise",
-        "Mad Hatter",
-        "Blue Lagoon",
-        "Zap!",
-        "Stackways",
-      ].includes(c.name)
+        'Purple Rain',
+        'Book Rust',
+        'Mango Warrior',
+        'Tequila Sunrise',
+        'Mad Hatter',
+        'Blue Lagoon',
+        'Zap!',
+        'Stackways',
+      ].includes(c.name),
     );
   } else {
     pool = BASE_CARDS.filter((c) =>
       [
-        "Dante",
-        "Pineapple Man",
-        "Beach Brawlers",
-        "Grave Recall",
-        "Beatrice",
-        "Electra",
-        "Edgar",
-        "Zap!",
-        "Insight",
-      ].includes(c.name)
+        'Dante',
+        'Pineapple Man',
+        'Beach Brawlers',
+        'Grave Recall',
+        'Beatrice',
+        'Electra',
+        'Edgar',
+        'Zap!',
+        'Insight',
+      ].includes(c.name),
     );
   }
   if (!pool.length) pool = BASE_CARDS;
@@ -205,7 +208,7 @@ export function makeFixedAIDeck(stage: number): Card[] {
 }
 
 export function randomHeroPower(): string {
-  return ["Lib", "Goer", "Aura"][Math.floor(Math.random() * 3)];
+  return ['Lib', 'Goer', 'Aura'][Math.floor(Math.random() * 3)];
 }
 export function randomRewardOptions(): Card[] {
   const seen = new Set<string>();
@@ -228,33 +231,33 @@ export function campaignDraftPool(unlocks: string[]): Card[] {
 // --- REDUCER LOGIC ---
 export function reducer(state: State, action: Action): State {
   switch (action.type) {
-    case "MAIN_MENU":
+    case 'MAIN_MENU':
       return {
         ...initialState,
         campaign: { ...initialState.campaign, unlocks: loadUnlocks() },
       };
-    case "SET_TAB":
+    case 'SET_TAB':
       return { ...state, tab: action.tab };
-    case "FREEPLAY_HUMAN":
+    case 'FREEPLAY_HUMAN':
       return {
         ...initialState,
-        tab: "heroSelect",
+        tab: 'heroSelect',
         vsAI: false,
         dbCurrent: 1,
         campaign: { ...initialState.campaign, unlocks: loadUnlocks() },
       };
-    case "FREEPLAY_AI":
+    case 'FREEPLAY_AI':
       return {
         ...initialState,
-        tab: "heroSelect",
+        tab: 'heroSelect',
         vsAI: true,
         dbCurrent: 1,
         campaign: { ...initialState.campaign, unlocks: loadUnlocks() },
       };
-    case "CAMPAIGN_START":
+    case 'CAMPAIGN_START':
       return {
         ...initialState,
-        tab: "campaignHero",
+        tab: 'campaignHero',
         campaign: {
           active: true,
           stage: 0,
@@ -263,46 +266,45 @@ export function reducer(state: State, action: Action): State {
           unlocks: loadUnlocks(),
         },
       };
-    case "SELECT_HERO": {
+    case 'SELECT_HERO': {
       const p = state.dbCurrent;
-      if (!state.hero[p])
-        return { ...state, hero: { ...state.hero, [p]: action.hero } };
+      if (!state.hero[p]) return { ...state, hero: { ...state.hero, [p]: action.hero } };
       const pw = { ...state.power, [p]: action.power };
-      if (state.tab === "campaignHero") {
+      if (state.tab === 'campaignHero') {
         return {
           ...state,
           power: pw,
-          tab: "campaignDraft",
+          tab: 'campaignDraft',
           deckBuilder: { ...state.deckBuilder, 1: [] },
           dbCurrent: 1,
         };
       }
       if (state.vsAI && p === 1) {
-        const aiHero = Math.random() < 0.5 ? "Library" : "Beach";
+        const aiHero = Math.random() < 0.5 ? 'Library' : 'Beach';
         const aiPower = randomHeroPower();
         return {
           ...state,
           power: { ...pw, 2: aiPower },
           hero: { ...state.hero, 2: aiHero },
-          tab: "deckBuilder",
+          tab: 'deckBuilder',
           dbCurrent: 1,
         };
       }
       if (p === 1) return { ...state, power: pw, dbCurrent: 2 };
-      return { ...state, power: pw, tab: "deckBuilder", dbCurrent: 1 };
+      return { ...state, power: pw, tab: 'deckBuilder', dbCurrent: 1 };
     }
-    case "ADD_TO_DECK": {
+    case 'ADD_TO_DECK': {
       const p = state.dbCurrent,
         picks = state.deckBuilder[p],
         c = action.card;
-      const legal = state.tab === "campaignDraft" ? legalToAdd10 : legalToAdd20;
+      const legal = state.tab === 'campaignDraft' ? legalToAdd10 : legalToAdd20;
       if (!legal(picks, c)) return state;
       return {
         ...state,
         deckBuilder: { ...state.deckBuilder, [p]: [...picks, c] },
       };
     }
-    case "REMOVE_FROM_DECK": {
+    case 'REMOVE_FROM_DECK': {
       const p = state.dbCurrent,
         picks = [...state.deckBuilder[p]];
       const idx = picks.findIndex((x) => x.id === action.card.id);
@@ -310,12 +312,12 @@ export function reducer(state: State, action: Action): State {
       picks.splice(idx, 1);
       return { ...state, deckBuilder: { ...state.deckBuilder, [p]: picks } };
     }
-    case "NEXT_DRAFT": {
-      const need = state.tab === "campaignDraft" ? 10 : 20;
+    case 'NEXT_DRAFT': {
+      const need = state.tab === 'campaignDraft' ? 10 : 20;
       const p = state.dbCurrent;
       if (state.deckBuilder[p].length !== need) return state;
-      if (state.tab === "campaignDraft") {
-        return reducer({ ...state }, { type: "CAMPAIGN_BUILD_NEXT" });
+      if (state.tab === 'campaignDraft') {
+        return reducer({ ...state }, { type: 'CAMPAIGN_BUILD_NEXT' });
       }
       if (state.vsAI) {
         if (p === 1) {
@@ -326,49 +328,39 @@ export function reducer(state: State, action: Action): State {
             dbCurrent: 2,
           };
         } else {
-          return startMulliganFromDecks(
-            state,
-            state.deckBuilder[1],
-            state.deckBuilder[2],
-            false
-          );
+          return startMulliganFromDecks(state, state.deckBuilder[1], state.deckBuilder[2], false);
         }
       } else {
         if (p === 1) return { ...state, dbCurrent: 2 };
-        return startMulliganFromDecks(
-          state,
-          state.deckBuilder[1],
-          state.deckBuilder[2],
-          false
-        );
+        return startMulliganFromDecks(state, state.deckBuilder[1], state.deckBuilder[2], false);
       }
     }
-    case "CAMPAIGN_BUILD_NEXT": {
+    case 'CAMPAIGN_BUILD_NEXT': {
       const nextStage = state.campaign.stage + 1;
       const aiDeck = makeFixedAIDeck(nextStage);
-      const heroPowersByStage = { 1: "Lib", 2: "Goer", 3: "Aura" };
-  const aiPower = (heroPowersByStage as Record<number, string>)[nextStage] || "Lib";
+      const heroPowersByStage = { 1: 'Lib', 2: 'Goer', 3: 'Aura' };
+      const aiPower = (heroPowersByStage as Record<number, string>)[nextStage] || 'Lib';
       const s = {
         ...state,
         campaign: { ...state.campaign, stage: nextStage },
-        hero: { ...state.hero, 2: Math.random() < 0.5 ? "Library" : "Beach" },
+        hero: { ...state.hero, 2: Math.random() < 0.5 ? 'Library' : 'Beach' },
         power: { ...state.power, 2: aiPower },
       };
       return startMulliganFromDecks(s, state.deckBuilder[1], aiDeck, true);
     }
-    case "MULL_TOGGLE": {
+    case 'MULL_TOGGLE': {
       const p = action.p;
-  const ids = new Set(state.mullSel[p]);
+      const ids = new Set(state.mullSel[p]);
       if (ids.has(action.id)) ids.delete(action.id);
       else ids.add(action.id);
       return { ...state, mullSel: { ...state.mullSel, [p]: ids } };
     }
-    case "MULL_CONFIRM": {
+    case 'MULL_CONFIRM': {
       const p = action.p;
       const ids = new Set(state.mullSel[p]);
       const pl = state.players[p];
-  const keep = pl.hand.filter((c) => c.id !== undefined && !ids.has(c.id));
-  const toss = pl.hand.filter((c) => c.id !== undefined && ids.has(c.id));
+      const keep = pl.hand.filter((c) => c.id !== undefined && !ids.has(c.id));
+      const toss = pl.hand.filter((c) => c.id !== undefined && ids.has(c.id));
       const reshuffled = shuffle([...pl.deck, ...toss]);
       const draw = reshuffled.slice(0, toss.length);
       const rest = reshuffled.slice(toss.length);
@@ -385,14 +377,14 @@ export function reducer(state: State, action: Action): State {
         };
       return {
         ...state,
-        tab: "game",
+        tab: 'game',
         players,
         mullSel: { ...state.mullSel, 2: new Set() },
         active: 1,
-        log: ["— Game Start —"],
+        log: ['— Game Start —'],
       };
     }
-    case "DRAW": {
+    case 'DRAW': {
       const p = state.active,
         pl = state.players[p];
       if (!pl.deck.length) return endGame(state, 3 - p, state.campaign.active);
@@ -405,7 +397,7 @@ export function reducer(state: State, action: Action): State {
         },
       };
     }
-    case "PLAY_CARD": {
+    case 'PLAY_CARD': {
       const p = state.active,
         pl = state.players[p],
         card = action.card;
@@ -413,7 +405,7 @@ export function reducer(state: State, action: Action): State {
       const newMana = { ...state.mana, [p]: state.mana[p] - card.cost };
       const newHand = pl.hand.filter((c) => c.id !== card.id);
       const op = state.players[3 - p];
-      if (card.effect === "damage2") {
+      if (card.effect === 'damage2') {
         return {
           ...state,
           mana: newMana,
@@ -422,7 +414,7 @@ export function reducer(state: State, action: Action): State {
           log: [`✨ P${p} casts ${card.name}`, ...state.log].slice(0, 20),
         };
       }
-      if (card.effect === "draw2") {
+      if (card.effect === 'draw2') {
         const draw = pl.deck.slice(0, 2);
         return {
           ...state,
@@ -439,7 +431,7 @@ export function reducer(state: State, action: Action): State {
           log: [`📚 P${p} draws 2`, ...state.log].slice(0, 20),
         };
       }
-      if (card.effect === "summon2") {
+      if (card.effect === 'summon2') {
         let extra = pl.extra.length
           ? [...pl.extra]
           : EXTRA_POOL_TEMPLATE.map((c) => ({ ...c, id: makeId() }));
@@ -460,7 +452,7 @@ export function reducer(state: State, action: Action): State {
           log: [`🌀 P${p} summons 2 from extra`, ...state.log].slice(0, 20),
         };
       }
-      if (card.effect === "summonTop2Grave") {
+      if (card.effect === 'summonTop2Grave') {
         const revived = pl.grave.slice(-2).map((x) => ({ ...x, id: makeId() }));
         const remaining = pl.grave.slice(0, -2);
         return {
@@ -478,7 +470,7 @@ export function reducer(state: State, action: Action): State {
           log: [`💀 P${p} revives 2`, ...state.log].slice(0, 20),
         };
       }
-      if (card.effect === "banana" && card.type === "unit") {
+      if (card.effect === 'banana' && card.type === 'unit') {
         const summoned = { ...card, id: makeId() };
         let newOpp = [...op.field];
         if (newOpp.length) {
@@ -504,7 +496,7 @@ export function reducer(state: State, action: Action): State {
           log: [`🍌 P${p} plays ${card.name}`, ...state.log].slice(0, 20),
         };
       }
-      if (card.type === "unit") {
+      if (card.type === 'unit') {
         return {
           ...state,
           mana: newMana,
@@ -529,15 +521,19 @@ export function reducer(state: State, action: Action): State {
         },
       };
     }
-    case "RESOLVE_TARGET": {
+    case 'RESOLVE_TARGET': {
       const { by, card } = state.pendingTarget;
       const p = by,
         o = 3 - by;
       const pl = state.players[p],
         op = state.players[o];
-      if (card.effect === "damage2") {
+      if (card.effect === 'damage2') {
         const nf = op.field
-          .map((u) => (u.id === action.targetId && typeof u.hp === 'number' ? { ...u, hp: (u.hp as number) - 2 } : u))
+          .map((u) =>
+            u.id === action.targetId && typeof u.hp === 'number'
+              ? { ...u, hp: (u.hp as number) - 2 }
+              : u,
+          )
           .filter((u) => typeof u.hp === 'number' && (u.hp as number) > 0);
         return {
           ...state,
@@ -552,7 +548,7 @@ export function reducer(state: State, action: Action): State {
       }
       return { ...state, pendingTarget: null };
     }
-    case "ATTACK_UNIT": {
+    case 'ATTACK_UNIT': {
       const p = state.active,
         o = 3 - p,
         { att, def } = action;
@@ -560,18 +556,32 @@ export function reducer(state: State, action: Action): State {
         op = state.players[o];
       const ac = state.attackCount[p] + 1;
       let atkVal = att.atk;
-      if (state.power[p] === "Aura" && ac === 2) atkVal++;
-      const d1 = atkVal !== undefined && def ? def.keyword === "Vanguard" && true ? Math.max(0, atkVal - 1) : atkVal : 0;
-      const d2 = def.atk !== undefined && att ? att.keyword === "Vanguard" && true ? Math.max(0, def.atk - 1) : def.atk : 0;
+      if (state.power[p] === 'Aura' && ac === 2) atkVal++;
+      const d1 =
+        atkVal !== undefined && def
+          ? def.keyword === 'Vanguard' && true
+            ? Math.max(0, atkVal - 1)
+            : atkVal
+          : 0;
+      const d2 =
+        def.atk !== undefined && att
+          ? att.keyword === 'Vanguard' && true
+            ? Math.max(0, def.atk - 1)
+            : def.atk
+          : 0;
       const nf = op.field
-        .map((u) => (u.id === def.id && typeof u.hp === 'number' ? { ...u, hp: (u.hp as number) - d1 } : u))
+        .map((u) =>
+          u.id === def.id && typeof u.hp === 'number' ? { ...u, hp: (u.hp as number) - d1 } : u,
+        )
         .filter((u) => typeof u.hp === 'number' && (u.hp as number) > 0);
       const pf = pl.field
-        .map((u) => (u.id === att.id && typeof u.hp === 'number' ? { ...u, hp: (u.hp as number) - d2 } : u))
+        .map((u) =>
+          u.id === att.id && typeof u.hp === 'number' ? { ...u, hp: (u.hp as number) - d2 } : u,
+        )
         .filter((u) => typeof u.hp === 'number' && (u.hp as number) > 0);
       let lifeHeal = pl.life;
       const defDied = !nf.find((x) => x.id === def.id);
-      if (att.keyword === "Lifesteal" && defDied && atkVal) lifeHeal += atkVal;
+      if (att.keyword === 'Lifesteal' && defDied && atkVal) lifeHeal += atkVal;
       return {
         ...state,
         attackCount: { ...state.attackCount, [p]: ac },
@@ -584,16 +594,16 @@ export function reducer(state: State, action: Action): State {
         log: [`⚔️ ${att.name}→${def.name}`, ...state.log].slice(0, 20),
       };
     }
-    case "ATTACK_HERO": {
+    case 'ATTACK_HERO': {
       const p = state.active,
         o = 3 - p,
         att = action.att;
       const pl = state.players[p],
         op = state.players[o];
       const ac = state.attackCount[p] + 1;
-  let atkVal = att.atk;
-      if (state.power[p] === "Aura" && ac === 2) atkVal++;
-  const life = Math.max(0, op.life - (atkVal || 0));
+      let atkVal = att.atk;
+      if (state.power[p] === 'Aura' && ac === 2) atkVal++;
+      const life = Math.max(0, op.life - (atkVal || 0));
       return {
         ...state,
         attackCount: { ...state.attackCount, [p]: ac },
@@ -602,21 +612,21 @@ export function reducer(state: State, action: Action): State {
         log: [`🎯 ${att.name} hits hero for ${atkVal}`, ...state.log].slice(0, 20),
       };
     }
-    case "HERO_POWER": {
+    case 'HERO_POWER': {
       const p = state.active,
         power = state.power[p];
-      if (!power || power === "Aura" || state.powerUsed[p]) return state;
+      if (!power || power === 'Aura' || state.powerUsed[p]) return state;
       if (state.mana[p] < 1) return state;
       const pl = state.players[p];
       const mana = { ...state.mana, [p]: state.mana[p] - 1 };
-      if (power === "Lib") {
+      if (power === 'Lib') {
         const lib = {
-          name: "10 of Lib",
+          name: '10 of Lib',
           cost: 1,
-          type: "unit",
+          type: 'unit',
           atk: 1,
           hp: 1,
-          keyword: "Vanguard",
+          keyword: 'Vanguard',
           level: 1,
           id: makeId(),
         };
@@ -631,23 +641,23 @@ export function reducer(state: State, action: Action): State {
           log: [`⭐ P${p} summons 10 of Lib`, ...state.log].slice(0, 20),
         };
       }
-      if (power === "Goer") {
+      if (power === 'Goer') {
         // Type guard for Card
         let extra: Card[];
         if (pl.extra.length) {
           extra = pl.extra.map((c) => ({
             ...c,
-            type: "unit" as const,
+            type: 'unit' as const,
           }));
         } else {
           extra = EXTRA_POOL_TEMPLATE.map((c) => ({
             ...c,
             id: makeId(),
-            type: "unit" as const,
+            type: 'unit' as const,
           }));
         }
-        const pick = { ...extra[0], type: "unit" as const };
-        const rest = extra.slice(1).map((c) => ({ ...c, type: "unit" as const }));
+        const pick = { ...extra[0], type: 'unit' as const };
+        const rest = extra.slice(1).map((c) => ({ ...c, type: 'unit' as const }));
         return {
           ...state,
           mana,
@@ -661,9 +671,10 @@ export function reducer(state: State, action: Action): State {
       }
       return state;
     }
-    case "END_TURN": {
+    case 'END_TURN': {
       const next = 3 - state.active;
       const counts = { ...state.turnCount, [next]: state.turnCount[next] + 1 };
+      // Prepare state for draw trigger
       return {
         ...state,
         active: next,
@@ -674,11 +685,11 @@ export function reducer(state: State, action: Action): State {
         powerUsed: { ...state.powerUsed, [state.active]: false },
       };
     }
-    case "FORFEIT": {
+    case 'FORFEIT': {
       if (state.campaign.active)
         return {
           ...initialState,
-          tab: "campaignHero",
+          tab: 'campaignHero',
           campaign: {
             active: true,
             stage: 0,
@@ -692,23 +703,23 @@ export function reducer(state: State, action: Action): State {
         campaign: { ...initialState.campaign, unlocks: loadUnlocks() },
       };
     }
-    case "OPEN_ART_MANAGER":
-      return { ...state, tab: "artManager" };
-    case "SET_CARD_ART": {
+    case 'OPEN_ART_MANAGER':
+      return { ...state, tab: 'artManager' };
+    case 'SET_CARD_ART': {
       const map = { ...state.imageMap, [action.cardName]: action.objectURL };
-      localStorage.setItem("cardImages", JSON.stringify(map));
+      localStorage.setItem('cardImages', JSON.stringify(map));
       return { ...state, imageMap: map };
     }
-    case "CLEAR_CARD_ART": {
+    case 'CLEAR_CARD_ART': {
       const map = { ...state.imageMap };
       delete map[action.cardName];
-      localStorage.setItem("cardImages", JSON.stringify(map));
+      localStorage.setItem('cardImages', JSON.stringify(map));
       return { ...state, imageMap: map };
     }
-    case "REWARD_BEGIN": {
+    case 'REWARD_BEGIN': {
       return {
         ...state,
-        tab: "campaignReward",
+        tab: 'campaignReward',
         campaign: {
           ...state.campaign,
           rewardsLeft: 3,
@@ -716,7 +727,7 @@ export function reducer(state: State, action: Action): State {
         },
       };
     }
-    case "REWARD_PICK": {
+    case 'REWARD_PICK': {
       if (state.campaign.rewardsLeft <= 0) return state;
       const chosen = action.card;
       const newDeck = [...state.deckBuilder[1], { ...chosen, id: makeId() }];
@@ -737,7 +748,7 @@ export function reducer(state: State, action: Action): State {
         },
       };
       if (left === 0) {
-        return reducer(next, { type: "CAMPAIGN_BUILD_NEXT" });
+        return reducer(next, { type: 'CAMPAIGN_BUILD_NEXT' });
       }
       return next;
     }

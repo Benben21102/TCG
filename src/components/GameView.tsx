@@ -10,6 +10,13 @@ export function GameView({ state, dispatch }: { state: State; dispatch: React.Di
   const op = 3 - p;
   const player = state.players[p];
   const opponent = state.players[op];
+
+  // Helper to handle end turn and draw
+  const handleEndTurn = () => {
+    dispatch({ type: 'END_TURN' });
+    dispatch({ type: 'DRAW' });
+  };
+
   return (
     <div className="game">
       <Header
@@ -22,7 +29,7 @@ export function GameView({ state, dispatch }: { state: State; dispatch: React.Di
         life2={state.players[2].life}
         power={state.power[p]}
         onHeroPower={() => dispatch({ type: 'HERO_POWER' })}
-        onEndTurn={() => dispatch({ type: 'END_TURN' })}
+        onEndTurn={handleEndTurn}
         onForfeit={() => dispatch({ type: 'FORFEIT' })}
       />
       <div className="flex" style={{ gap: 24 }}>

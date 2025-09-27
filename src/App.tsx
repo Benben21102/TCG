@@ -1,6 +1,6 @@
 import React, { useReducer, useEffect } from 'react';
 import { initialState, reducer } from './state';
-import { State, Action } from './types';
+// import { State, Action } from './types';
 import { MainMenu } from './components/MainMenu';
 import { ArtManager } from './components/ArtManager';
 import { HeroSelect } from './components/HeroSelect';
@@ -16,7 +16,16 @@ import { BASE_CARDS } from './constants';
 export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  // ...AI hooks, auto-draw, etc. can be modularized and imported as hooks
+  // Draw a card for the starting player at the start of the game
+  useEffect(() => {
+    if (state.tab === 'game' && state.turnCount[state.active] === 1) {
+      const player = state.players[state.active];
+      // Only draw if hand size is 3 (the initial hand size)
+      if (player.hand.length === 3) {
+        dispatch({ type: 'DRAW' });
+      }
+    }
+  }, [state.tab, state.turnCount, state.active, state.players]);
 
   // main router
   if (state.tab === 'mainMenu')
