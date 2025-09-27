@@ -5,22 +5,31 @@
   "keywords": [],
   "main": "src/index.tsx",
   "dependencies": {
+    "framer-motion": "12.23.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-scripts": "^5.0.0",
-    "framer-motion": "12.23.6"
+    "react-scripts": "^5.0.0"
   },
   "devDependencies": {
     "@types/react": "19.0.0",
     "@types/react-dom": "19.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.44.1",
+    "@typescript-eslint/parser": "^8.44.1",
+    "eslint": "^9.36.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.1",
     "loader-utils": "3.2.1",
+    "prettier": "^3.6.2",
     "typescript": "5.7.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint 'src/**/*.{ts,tsx}'",
+    "format": "prettier --write 'src/**/*.{ts,tsx,css,md,json}'",
+    "setup": "npm install && npx husky install && echo 'Setup complete! You can now use git and npm scripts.'"
   },
   "browserslist": [
     ">0.2%",

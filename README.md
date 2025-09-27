@@ -1,135 +1,142 @@
-# React Project
 
-A React + TypeScript application that uses **react-scripts** and **Framer Motion** for animations.
+# TCG React App (TypeScript)
 
-> **Note:** This README documents the prerequisites and how to stand the project up with `npm` using the `package.json` bundled with the repo.
+This is a Trading Card Game (TCG) web app built with **React** and **TypeScript**. It uses `react-scripts` for development and build, and **Framer Motion** for animations.
 
 ---
 
-## 📦 Prerequisites
+## 🟢 How to Run This Project (No Coding Experience Needed)
 
-Make sure the following are installed on your machine:
+### 1. Install Node.js
 
-- **Node.js** — `>= 18.x` (recommended)  
-- **npm** — bundled with Node.js (use the npm that comes with your Node installation)
+- Go to [https://nodejs.org/](https://nodejs.org/) and download the **LTS** version for your operating system (Windows, Mac, or Linux).
+- Run the installer and follow the prompts (default options are fine).
+- After installation, open a terminal (Command Prompt or PowerShell on Windows).
 
-Check versions:
+Check installation:
 
-```bash
+```
 node -v
 npm -v
 ```
+Both should print a version number (e.g. `v18.19.0`).
 
-Optional (recommended for local Node version management):
+### 2. Download the Project Files
 
-```bash
-# Using nvm
-nvm install 18
-nvm use 18
+- If you received a ZIP file, extract it to a folder.
+- If you are using GitHub, click the green **Code** button and choose **Download ZIP** or use `git clone` if you know how.
+
+### 3. Open a Terminal in the Project Folder
+
+- On Windows: Right-click in the folder and choose **Open in Terminal** or **Open PowerShell window here**.
+- On Mac: Open Terminal, then `cd` to the folder.
+
+
+
+### 4. One-Step Project Setup (Recommended for New Contributors)
+
+**Before you start:**
+- Make sure Node.js and npm are installed (see step 1 above). The setup will fail if they are missing.
+
+**Windows users:**
+- In the terminal, run:
+  ```
+  npm run setup
+  ```
+
+**Mac/Linux/Unix users:**
+- You can also run the shell script directly:
+  ```
+  sh setup.sh
+  ```
+
+This will:
+- Install all dependencies
+- Set up pre-commit hooks for code style and linting
+- Print a success message when ready
+
+You only need to do this once when you first join the project (or after cloning).
+
+**What the setup does:**
+- Checks for Node.js and npm, and prints an error if not found
+- Installs all required packages
+- Sets up Husky pre-commit hooks (auto-lint/format on commit)
+
+### 5. Start the App
+
+In the same terminal, run:
+
 ```
-
----
-
-## 🚀 Getting started (local)
-
-1. Clone the repo (if you haven't already):
-
-```bash
-git clone <repository-url>
-cd <repository-directory>
-```
-
-2. Install dependencies:
-
-```bash
-# installs dependencies listed in package.json
-npm install
-```
-
-3. Start the dev server:
-
-```bash
 npm start
 ```
 
-Open http://localhost:3000 in your browser (react-scripts defaults to port `3000` unless the port is overridden).
+This will open the app in your web browser (usually at [http://localhost:3000](http://localhost:3000)).
 
 ---
 
-## 📦 Available scripts
+## � What You Should See
 
-- `npm start` — Start the development server (hot reload).
-- `npm run build` — Create an optimized production build (output: `build/`).
-- `npm test` — Run tests with react-scripts (jsdom environment).
-- `npm run eject` — Eject CRA configuration (irreversible).
-
----
-
-## 🎞 Framer Motion
-
-Framer Motion is included as an animation library (`framer-motion`). You can import and use it in your components:
-
-```tsx
-import { motion } from "framer-motion";
-
-export default function Example() {
-  return <motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }}>Hello</motion.div>;
-}
-```
+- A card game interface with menus, deck building, and gameplay.
+- All code is now in **TypeScript** (`.tsx`/`.ts` files). There are no `.js` files in `src/`.
+- You do **not** need to change any code to play or test the app.
 
 ---
 
-## ⚠️ Common troubleshooting
 
-If you encounter problems:
+## 🛠️ Troubleshooting & Tips
 
-1. Verify Node & npm versions:
 
-```bash
-node -v
-npm -v
-```
+**1. Node or npm not found?**
+  - Make sure you installed Node.js and opened a new terminal after installing.
+  - You can download Node.js (which includes npm) from [https://nodejs.org/](https://nodejs.org/)
 
-2. Clear/install from scratch:
+**2. Errors during `npm install`?**
+  - Try deleting the `node_modules` folder and `package-lock.json` file, then run `npm install` again.
 
-```bash
-rm -rf node_modules package-lock.json
-npm cache clean --force
-npm install
-```
+**3. Errors during `npm start`?**
+  - Make sure you are in the correct folder (where `package.json` is).
+  - Try running `npm install` again.
+  - If you see a message about a port being in use, close other apps or restart your computer.
 
-3. Use `npm ci` in CI environments (if you commit a `package-lock.json`):
 
-```bash
-npm ci
-```
+**4. Pre-commit hook not running?**
+  - Make sure you ran the setup script (`npm run setup` or `sh setup.sh`) after cloning.
+  - If you bypass git hooks (e.g., with `git commit --no-verify`), code style and linting will not be enforced.
 
-4. If tests or the dev server fail, ensure `src/index.tsx` exists and your TypeScript setup is correct. If you upgraded Node/npm recently, try switching Node versions via `nvm`.
-
-5. If you encounter dependency resolution or build errors, deleting `node_modules` and reinstalling (see step 2) often helps. For dependency vulnerability fixes, try:
-
-```bash
-npm audit fix
-```
+**5. Still stuck?**
+  - Ask a developer for help, or search the error message online.
 
 ---
 
-## 🔁 CI / Production
 
-- Use `npm ci` for deterministic installs in CI (requires `package-lock.json`).
-- Build for production:
+## 🟡 Scripts You Can Use
 
-```bash
-npm run build
-# then serve the build output with your static server of choice
-```
+- `npm run setup` — One-step setup for new contributors (installs dependencies, sets up git hooks)
+- `npm start` — Start the app in development mode (auto-reloads on changes)
+- `npm run build` — Make a production build (for deployment)
+- `npm test` — Run tests (if any)
+- `npm run lint` — Check code for style and errors (TypeScript, React, Prettier)
+- `npm run format` — Auto-format code, styles, markdown, and JSON
 
 ---
 
-## 🧩 Additional tips
 
-- If you plan to migrate away from `react-scripts` in the future, consider Vite / Next.js for faster dev builds — but that is beyond this project's scope.
-- Keep TypeScript and type definitions (`@types/*`) in sync with your React version to avoid type mismatches.
+## 📝 Notes for Developers & Teams
+
+- All logic is now in TypeScript. No legacy JS files remain.
+- Main entry: `src/index.tsx` and `src/App.tsx`
+- Styles: `src/App.css` and `src/styles.css`
+- Card pool and constants: `src/constants.ts`
+- Game state and reducer: `src/state.ts`
+- Components: `src/components/`
+- Animations: [Framer Motion](https://www.framer.com/motion/)
+- **Code style and linting:**
+  - Prettier and ESLint are enforced on commit (via Husky/lint-staged)
+  - Run `npm run lint` and `npm run format` manually as needed
+  - Use consistent code style for all contributions
+- **Pre-commit hooks:**
+  - All code is checked and auto-formatted before every commit
+  - If a commit fails, fix the reported issues and try again
 
 ---
 
