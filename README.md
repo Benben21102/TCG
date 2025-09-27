@@ -1,135 +1,101 @@
-# React Project
 
-A React + TypeScript application that uses **react-scripts** and **Framer Motion** for animations.
+# TCG React App (TypeScript)
 
-> **Note:** This README documents the prerequisites and how to stand the project up with `npm` using the `package.json` bundled with the repo.
+This is a Trading Card Game (TCG) web app built with **React** and **TypeScript**. It uses `react-scripts` for development and build, and **Framer Motion** for animations.
 
 ---
 
-## 📦 Prerequisites
+## 🟢 How to Run This Project (No Coding Experience Needed)
 
-Make sure the following are installed on your machine:
+### 1. Install Node.js
 
-- **Node.js** — `>= 18.x` (recommended)  
-- **npm** — bundled with Node.js (use the npm that comes with your Node installation)
+- Go to [https://nodejs.org/](https://nodejs.org/) and download the **LTS** version for your operating system (Windows, Mac, or Linux).
+- Run the installer and follow the prompts (default options are fine).
+- After installation, open a terminal (Command Prompt or PowerShell on Windows).
 
-Check versions:
+Check installation:
 
-```bash
+```
 node -v
 npm -v
 ```
+Both should print a version number (e.g. `v18.19.0`).
 
-Optional (recommended for local Node version management):
+### 2. Download the Project Files
 
-```bash
-# Using nvm
-nvm install 18
-nvm use 18
+- If you received a ZIP file, extract it to a folder.
+- If you are using GitHub, click the green **Code** button and choose **Download ZIP** or use `git clone` if you know how.
+
+### 3. Open a Terminal in the Project Folder
+
+- On Windows: Right-click in the folder and choose **Open in Terminal** or **Open PowerShell window here**.
+- On Mac: Open Terminal, then `cd` to the folder.
+
+### 4. Install the Project Dependencies
+
+In the terminal, run:
+
 ```
-
----
-
-## 🚀 Getting started (local)
-
-1. Clone the repo (if you haven't already):
-
-```bash
-git clone <repository-url>
-cd <repository-directory>
-```
-
-2. Install dependencies:
-
-```bash
-# installs dependencies listed in package.json
 npm install
 ```
 
-3. Start the dev server:
+This will download everything needed to run the app. (You only need to do this once, or if you get new files.)
 
-```bash
+### 5. Start the App
+
+In the same terminal, run:
+
+```
 npm start
 ```
 
-Open http://localhost:3000 in your browser (react-scripts defaults to port `3000` unless the port is overridden).
+This will open the app in your web browser (usually at [http://localhost:3000](http://localhost:3000)).
 
 ---
 
-## 📦 Available scripts
+## � What You Should See
 
-- `npm start` — Start the development server (hot reload).
-- `npm run build` — Create an optimized production build (output: `build/`).
-- `npm test` — Run tests with react-scripts (jsdom environment).
-- `npm run eject` — Eject CRA configuration (irreversible).
-
----
-
-## 🎞 Framer Motion
-
-Framer Motion is included as an animation library (`framer-motion`). You can import and use it in your components:
-
-```tsx
-import { motion } from "framer-motion";
-
-export default function Example() {
-  return <motion.div animate={{ opacity: 1 }} initial={{ opacity: 0 }}>Hello</motion.div>;
-}
-```
+- A card game interface with menus, deck building, and gameplay.
+- All code is now in **TypeScript** (`.tsx`/`.ts` files). There are no `.js` files in `src/`.
+- You do **not** need to change any code to play or test the app.
 
 ---
 
-## ⚠️ Common troubleshooting
+## 🛠️ Troubleshooting (If Something Doesn't Work)
 
-If you encounter problems:
+**1. Node or npm not found?**
+  - Make sure you installed Node.js and opened a new terminal after installing.
 
-1. Verify Node & npm versions:
+**2. Errors during `npm install`?**
+  - Try deleting the `node_modules` folder and `package-lock.json` file, then run `npm install` again.
 
-```bash
-node -v
-npm -v
-```
+**3. Errors during `npm start`?**
+  - Make sure you are in the correct folder (where `package.json` is).
+  - Try running `npm install` again.
+  - If you see a message about a port being in use, close other apps or restart your computer.
 
-2. Clear/install from scratch:
-
-```bash
-rm -rf node_modules package-lock.json
-npm cache clean --force
-npm install
-```
-
-3. Use `npm ci` in CI environments (if you commit a `package-lock.json`):
-
-```bash
-npm ci
-```
-
-4. If tests or the dev server fail, ensure `src/index.tsx` exists and your TypeScript setup is correct. If you upgraded Node/npm recently, try switching Node versions via `nvm`.
-
-5. If you encounter dependency resolution or build errors, deleting `node_modules` and reinstalling (see step 2) often helps. For dependency vulnerability fixes, try:
-
-```bash
-npm audit fix
-```
+**4. Still stuck?**
+  - Ask a developer for help, or search the error message online.
 
 ---
 
-## 🔁 CI / Production
+## � Scripts You Can Use
 
-- Use `npm ci` for deterministic installs in CI (requires `package-lock.json`).
-- Build for production:
-
-```bash
-npm run build
-# then serve the build output with your static server of choice
-```
+- `npm start` — Start the app in development mode (auto-reloads on changes)
+- `npm run build` — Make a production build (for deployment)
+- `npm test` — Run tests (if any)
 
 ---
 
-## 🧩 Additional tips
+## 📝 Notes for Developers
 
-- If you plan to migrate away from `react-scripts` in the future, consider Vite / Next.js for faster dev builds — but that is beyond this project's scope.
-- Keep TypeScript and type definitions (`@types/*`) in sync with your React version to avoid type mismatches.
+- All logic is now in TypeScript. No legacy JS files remain.
+- Main entry: `src/index.tsx` and `src/App.tsx`
+- Styles: `src/App.css` and `src/styles.css`
+- Card pool and constants: `src/constants.ts`
+- Game state and reducer: `src/state.ts`
+- Components: `src/components/`
+- Animations: [Framer Motion](https://www.framer.com/motion/)
 
 ---
 
