@@ -1,11 +1,20 @@
 import React from 'react';
-import { State, Action } from '../types';
+import { State } from '../types';
+import {
+  playCard,
+  attackUnit,
+  attackHero,
+  heroPower,
+  endTurn,
+  forfeit,
+  draw,
+} from '../features/gameSlice';
 import { Header } from './Header';
 import { FieldPanel } from './FieldPanel';
 import { Hand } from './Hand';
 import { LogPanel } from './LogPanel';
 
-export function GameView({ state, dispatch }: { state: State; dispatch: React.Dispatch<Action> }) {
+export function GameView({ state, dispatch }: { state: State; dispatch: any }) {
   const p = state.active;
   const op = 3 - p;
   const player = state.players[p];
@@ -13,8 +22,8 @@ export function GameView({ state, dispatch }: { state: State; dispatch: React.Di
 
   // Helper to handle end turn and draw
   const handleEndTurn = () => {
-    dispatch({ type: 'END_TURN' });
-    dispatch({ type: 'DRAW' });
+    dispatch(endTurn());
+    dispatch(draw());
   };
 
   return (
@@ -28,9 +37,9 @@ export function GameView({ state, dispatch }: { state: State; dispatch: React.Di
         life1={state.players[1].life}
         life2={state.players[2].life}
         power={state.power[p]}
-        onHeroPower={() => dispatch({ type: 'HERO_POWER' })}
+        onHeroPower={() => dispatch(heroPower())}
         onEndTurn={handleEndTurn}
-        onForfeit={() => dispatch({ type: 'FORFEIT' })}
+        onForfeit={() => dispatch(forfeit())}
       />
       <div className="flex" style={{ gap: 24 }}>
         <div style={{ flex: 2 }}>
@@ -48,8 +57,8 @@ export function GameView({ state, dispatch }: { state: State; dispatch: React.Di
             isActive={true}
             attacked={state.attacked}
             opponentField={opponent.field}
-            onAttackUnit={(a, d) => dispatch({ type: 'ATTACK_UNIT', att: a, def: d })}
-            onAttackHero={(a) => dispatch({ type: 'ATTACK_HERO', att: a })}
+            onAttackUnit={(a, d) => dispatch(attackUnit({ att: a, def: d }))}
+            onAttackHero={(a) => dispatch(attackHero({ att: a }))}
             active={p}
             turn={state.turnCount[p]}
             imageMap={state.imageMap}
@@ -57,7 +66,7 @@ export function GameView({ state, dispatch }: { state: State; dispatch: React.Di
           <h3>Your Hand</h3>
           <Hand
             cards={player.hand}
-            onPlay={(c) => dispatch({ type: 'PLAY_CARD', card: c })}
+            onPlay={(c) => dispatch(playCard(c))}
             mana={state.mana[p]}
             imageMap={state.imageMap}
           />
