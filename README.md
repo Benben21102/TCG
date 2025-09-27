@@ -32,13 +32,23 @@ Both should print a version number (e.g. `v18.19.0`).
 - On Mac: Open Terminal, then `cd` to the folder.
 
 
+
 ### 4. One-Step Project Setup (Recommended for New Contributors)
 
-In the terminal, run:
+**Before you start:**
+- Make sure Node.js and npm are installed (see step 1 above). The setup will fail if they are missing.
 
-```
-npm run setup
-```
+**Windows users:**
+- In the terminal, run:
+  ```
+  npm run setup
+  ```
+
+**Mac/Linux/Unix users:**
+- You can also run the shell script directly:
+  ```
+  sh setup.sh
+  ```
 
 This will:
 - Install all dependencies
@@ -46,6 +56,11 @@ This will:
 - Print a success message when ready
 
 You only need to do this once when you first join the project (or after cloning).
+
+**What the setup does:**
+- Checks for Node.js and npm, and prints an error if not found
+- Installs all required packages
+- Sets up Husky pre-commit hooks (auto-lint/format on commit)
 
 ### 5. Start the App
 
@@ -67,10 +82,13 @@ This will open the app in your web browser (usually at [http://localhost:3000](h
 
 ---
 
-## 🛠️ Troubleshooting (If Something Doesn't Work)
+
+## 🛠️ Troubleshooting & Tips
+
 
 **1. Node or npm not found?**
   - Make sure you installed Node.js and opened a new terminal after installing.
+  - You can download Node.js (which includes npm) from [https://nodejs.org/](https://nodejs.org/)
 
 **2. Errors during `npm install`?**
   - Try deleting the `node_modules` folder and `package-lock.json` file, then run `npm install` again.
@@ -80,7 +98,12 @@ This will open the app in your web browser (usually at [http://localhost:3000](h
   - Try running `npm install` again.
   - If you see a message about a port being in use, close other apps or restart your computer.
 
-**4. Still stuck?**
+
+**4. Pre-commit hook not running?**
+  - Make sure you ran the setup script (`npm run setup` or `sh setup.sh`) after cloning.
+  - If you bypass git hooks (e.g., with `git commit --no-verify`), code style and linting will not be enforced.
+
+**5. Still stuck?**
   - Ask a developer for help, or search the error message online.
 
 ---
