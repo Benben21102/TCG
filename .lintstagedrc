@@ -1,7 +1,7 @@
 {
   "src/**/*.{js,jsx,ts,tsx}": [
     "eslint --fix",
-    "prettier --write"
+    "prettier --write --loglevel warn"
   ],
   "src/**/*.{css,scss,md,json}": [
     "prettier --write"
