@@ -44,21 +44,28 @@ export function MulliganScreen({
           {hand.map((c) => {
             const sel = selected.has(c.id!);
             return (
-              <div
+              <button
                 key={c.id}
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
-                  border: sel ? '2px solid #1976d2' : undefined,
-                  borderRadius: 8,
+                  border: sel ? '3px solid #1976d2' : '2px solid transparent',
+                  borderRadius: 12,
+                  background: 'none',
+                  padding: 0,
+                  margin: 0,
+                  cursor: 'pointer',
+                  outline: 'none',
+                  boxShadow: sel ? '0 0 0 3px #90caf9' : undefined,
+                  transition: 'box-shadow 0.2s, border 0.2s',
                 }}
+                onClick={() => onToggle(c.id!)}
+                tabIndex={0}
+                aria-label={sel ? `Unselect ${c.name}` : `Select ${c.name}`}
               >
                 <TradingCard card={c} imageUrl={imageMap[c.name]} />
-                <button className="btn" style={{ marginTop: 8 }} onClick={() => onToggle(c.id!)}>
-                  {sel ? 'Unselect' : 'Select'}
-                </button>
-              </div>
+              </button>
             );
           })}
         </Grid>

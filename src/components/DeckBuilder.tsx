@@ -88,17 +88,34 @@ export function DeckBuilder({
             const cnt = picks.filter((x) => x.name === c.name).length;
             const disabled = !legalFn(picks, c);
             return (
-              <div key={c.name} style={{ display: 'flex', justifyContent: 'center' }}>
+              <button
+                key={c.name}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  background: 'none',
+                  border: 'none',
+                  padding: 0,
+                  margin: 0,
+                  cursor: disabled ? 'not-allowed' : 'pointer',
+                  outline: 'none',
+                  borderRadius: 12,
+                  boxShadow: cnt ? '0 0 0 3px #ffd56a' : undefined,
+                  opacity: disabled ? 0.5 : 1,
+                  transition: 'box-shadow 0.2s, opacity 0.2s',
+                }}
+                onClick={() => !disabled && onAdd({ ...c, id: Math.random() })}
+                disabled={disabled}
+                tabIndex={0}
+                aria-label={`Add ${c.name} to deck`}
+              >
                 <TradingCard
                   card={c}
                   imageUrl={imageMap[c.name]}
                   count={cnt}
-                  onAdd={() => onAdd({ ...c, id: Math.random() })}
-                  onRemove={() => onRemove(picks.find((x) => x.name === c.name)!)}
-                  disabledAdd={disabled}
-                  disabledRemove={!cnt}
+                  // Remove onAdd/onRemove/disabledAdd/disabledRemove for pure visual
                 />
-              </div>
+              </button>
             );
           })}
         </Grid>
